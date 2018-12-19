@@ -1,0 +1,134 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger text-center" id="danger">
+   {{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if post.published_date %}
+    <div class="" style="margin-left: 8%;">
+    	<a href="{% url 'post_list' %}" class="btn btn-danger" role="button">Go Back</a>
+    </div>
+{% else %}
+    <div class="" style="margin-left: 8%;">
+        <a href="{% url 'post_draft' %}" class="btn btn-danger" role="button">Go Back</a>
+    </div>
+{% endif %}
+
+<br>
+
+<div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+
+
+                <h1>{{post.title}}
+                {% if user.is_authenticated %}
+                {% if user == post.author or user.is_superuser %}
+
+                 <a href="{% url 'post_edit' pk=post.pk %}"><i class="fa fa-pencil-square-o" aria-hidden="true" style="padding-left: 0%; float: right;"></i></a><a href="{% url 'post_delete' pk=post.pk %}"><i class="fa fa-trash-o" aria-hidden="true" style="padding-right: 3%; float: right;"></i></a>
+                 {% endif %}
+                 {% endif %}
+
+                 </h1>
+
+                <p class="lead">
+                    by :Barii <a href="">{{post.author.get_full_name}}</a>
+                </p>
+
+                <hr>
+
+                {% if post.published_date %}
+
+                <p><span class="glyphicon glyphicon-time"></span> Posted Date: {{post.published_date}}</p>
+
+                {% else %}
+
+                {% if user.is_authenticated %}
+
+                <p> Draft Post </p>
+                <p><span class="glyphicon glyphicon-time"></span> Last Saved: {{post.created_date}}<a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-primary" role="button" style="margin-left: 45%;">Publish Post</a></p>
+
+                {% endif %}
+
+                {% endif %}
+
+                <hr>
+
+                <img class="img-responsive" src="https://discoversdkcdn.azureedge.net/postscontent/python/python4.png" alt="" style="width:1500px;height:300px;">>
+
+                <hr>
+
+                <p class="lead">{{post.text|linebreaksbr}}</p>
+
+                <hr>
+
+                <!--div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <div class="media">
+                    <a class="pull-left" href="">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Start
+                            <small>Auust 25,9:30</small>
+                        </h4>
+                        Cras sit amet nibh libero,
+                    </div>
+                </div>
+
+                <Comment>
+                <div class="media">
+                    <a class="pull-left" href="">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Start
+                            <small>August 25 9:30 PM</small>
+                        </h4>
+                        Cras sit amet nibh libero
+                        <Nested Comment>
+                        <br>
+                        <br>
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Nested Start
+                                    <small>August 25 9:30 PM</small>
+                                </h4>
+                                Cras sit amet nibh libero
+                            </div>
+                        </div>
+                        < End Nested Comment>
+                    </div>
+                </div-->
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

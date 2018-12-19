@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Are You sure to delete the post titled "{{post.title}}" ?</h1>
+<br>
+<br>
+
+<form class="form-horizontal" method="POST">
+  {% csrf_token %}
+  <div class="form-group text-center" style="margin-left: 12%;">
+    <div class="col-sm-10">
+      <a href="{{refer}}" class="btn btn-danger" role="button">Cancel</a>
+    
+      <button type="submit" class="btn btn-success" name="submit2">Delete</button>
+    </div>
+  </div>
+
+</form>
+
+
+{% endblock %}
